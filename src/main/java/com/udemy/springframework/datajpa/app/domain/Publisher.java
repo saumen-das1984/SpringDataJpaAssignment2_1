@@ -10,11 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Publisher {
@@ -25,7 +23,7 @@ public class Publisher {
 	private String name;
 	
 	@ManyToMany(mappedBy = "publishers")
-    private Set<Address> address = new HashSet<>();
+    private Set<Address> addresses = new HashSet<>();
 	
 	public Publisher(String name) {
 		this.name = name;

@@ -2,6 +2,8 @@ package com.udemy.springframework.datajpa.app.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,13 +36,15 @@ public class Address {
 	@ManyToMany
     @JoinTable(name = "publisher_address", joinColumns = @JoinColumn(name = "address_id"),
             inverseJoinColumns = @JoinColumn(name = "publisher_id"))
-    private Set<Publisher> publisher = new HashSet<>();
+    private Set<Publisher> publishers = new HashSet<>();
 	
-	public Address(String line1, String city, String state, int zip) {
+	public Address(String line1, String city, String state, int zip, Publisher... publishers) {
 		this.line1 = line1;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.publishers = Stream.of(publishers).collect(Collectors.toSet());
+        this.publishers.forEach(x -> x.getAddresses().add(this));
 	}
 	
 	@Override
